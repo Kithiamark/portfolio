@@ -1,96 +1,1080 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Software engineer Portfolio</title>
-    <link rel="stylesheet" href="index.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mark Kithia — Full-Stack Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:    #0D0F14;
+      --paper:  #F5F2EC;
+      --warm:   #EDE8DF;
+      --navy:   #1A2E4A;
+      --teal:   #1B6B6B;
+      --gold:   #C8943A;
+      --muted:  #6B6B72;
+      --line:   rgba(26,46,74,0.12);
+      --ff-head: 'Syne', sans-serif;
+      --ff-body: 'DM Sans', sans-serif;
+      --ease:   cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: var(--ff-body);
+      background: var(--paper);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ── Navigation ─────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 4rem;
+      background: rgba(245,242,236,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+      transition: padding 0.3s var(--ease);
+    }
+
+    .nav-logo {
+      font-family: var(--ff-head);
+      font-weight: 800;
+      font-size: 1.35rem;
+      color: var(--navy);
+      letter-spacing: -0.03em;
+    }
+
+    .nav-logo span { color: var(--teal); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--navy); }
+
+    /* ── Hero ────────────────────────────────────────────────── */
+    #home {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 8rem 4rem 4rem;
+      gap: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Decorative background circle */
+    #home::after {
+      content: '';
+      position: absolute;
+      top: -10%;
+      right: -5%;
+      width: 55vw;
+      height: 55vw;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, rgba(27,107,107,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--teal);
+    }
+
+    .hero-text h1 {
+      font-family: var(--ff-head);
+      font-size: clamp(3rem, 5.5vw, 5.2rem);
+      font-weight: 800;
+      line-height: 1.03;
+      letter-spacing: -0.03em;
+      color: var(--navy);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-text h1 em {
+      font-style: normal;
+      color: var(--teal);
+    }
+
+    .hero-text p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 38ch;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 0.85rem 2.2rem;
+      background: var(--navy);
+      color: #fff;
+      font-family: var(--ff-body);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: background 0.25s var(--ease), transform 0.25s var(--ease);
+    }
+
+    .btn-primary:hover { background: var(--teal); transform: translateY(-2px); }
+
+    .btn-ghost {
+      display: inline-block;
+      padding: 0.85rem 2.2rem;
+      border: 1.5px solid var(--navy);
+      color: var(--navy);
+      font-family: var(--ff-body);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: background 0.25s, color 0.25s, transform 0.25s var(--ease);
+    }
+
+    .btn-ghost:hover { background: var(--navy); color: #fff; transform: translateY(-2px); }
+
+    /* Hero image frame */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    .hero-frame {
+      position: relative;
+      width: min(380px, 100%);
+    }
+
+    .hero-frame::before {
+      content: '';
+      position: absolute;
+      inset: -14px;
+      border: 1.5px solid var(--teal);
+      border-radius: 4px;
+      transform: rotate(2.5deg);
+      opacity: 0.45;
+    }
+
+    .hero-frame img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+      filter: grayscale(15%) contrast(1.05);
+    }
+
+   
+    .hero-frame .img-placeholder {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: linear-gradient(135deg, var(--warm) 0%, #d8d0c4 100%);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--ff-head);
+      font-size: 5rem;
+      font-weight: 800;
+      color: var(--navy);
+      opacity: 0.35;
+      letter-spacing: -0.04em;
+    }
+
+    /* Contact chips */
+    .hero-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 2rem;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.9rem;
+      background: var(--warm);
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      font-size: 0.78rem;
+      color: var(--navy);
+      font-weight: 500;
+    }
+
+    .chip svg { flex-shrink: 0; }
+
+    /* ── Section scaffold ────────────────────────────────────── */
+    section { padding: 6rem 4rem; }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 1.5rem;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .section-title {
+      font-family: var(--ff-head);
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--navy);
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      font-weight: 300;
+      max-width: 50ch;
+      line-height: 1.7;
+      margin-bottom: 3.5rem;
+    }
+
+    /* ── About ───────────────────────────────────────────────── */
+    #about {
+      background: var(--navy);
+      color: var(--paper);
+    }
+
+    #about .section-title { color: var(--paper); }
+    #about .section-label { color: #7dc9c9; }
+    #about .section-label::before { background: #7dc9c9; }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-body p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: rgba(245,242,236,0.75);
+      font-weight: 300;
+      margin-bottom: 1.2rem;
+    }
+
+    .about-body p strong { color: var(--paper); font-weight: 500; }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .stat-card {
+      padding: 1.5rem;
+      background: rgba(245,242,236,0.05);
+      border: 1px solid rgba(245,242,236,0.1);
+      border-radius: 4px;
+    }
+
+    .stat-number {
+      font-family: var(--ff-head);
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--paper);
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .stat-number span { color: #7dc9c9; }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: rgba(245,242,236,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+      margin-top: 0.3rem;
+    }
+
+    /* Skills list */
+    .skills-block { margin-top: 1rem; }
+
+    .skill-category {
+      margin-bottom: 1.4rem;
+    }
+
+    .skill-cat-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #7dc9c9;
+      margin-bottom: 0.6rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .skill-tag {
+      padding: 0.3rem 0.75rem;
+      background: rgba(245,242,236,0.07);
+      border: 1px solid rgba(245,242,236,0.12);
+      border-radius: 2px;
+      font-size: 0.8rem;
+      color: rgba(245,242,236,0.8);
+      font-weight: 400;
+    }
+
+    /* ── Services ────────────────────────────────────────────── */
+    #services { background: var(--warm); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--line);
+      border: 1.5px solid var(--line);
+    }
+
+    .service-card {
+      background: var(--warm);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s var(--ease);
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--teal);
+      transition: width 0.4s var(--ease);
+    }
+
+    .service-card:hover { background: #fff; }
+    .service-card:hover::before { width: 100%; }
+
+    .service-num {
+      font-family: var(--ff-head);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--teal);
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-icon-wrap {
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--navy);
+      border-radius: 3px;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-icon-wrap svg { color: #fff; }
+
+    .service-card h3 {
+      font-family: var(--ff-head);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    .service-card p {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    /* ── Projects ────────────────────────────────────────────── */
+    #portfolio { background: var(--paper); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      border: 1.5px solid var(--line);
+      border-radius: 4px;
+      overflow: hidden;
+      background: #fff;
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(26,46,74,0.1);
+      border-color: rgba(27,107,107,0.3);
+    }
+
+    /* Featured card spans full width */
+    .project-card.featured {
+      grid-column: span 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .project-card-visual {
+      background: var(--navy);
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--ff-head);
+      font-size: 4rem;
+      font-weight: 800;
+      color: rgba(245,242,236,0.08);
+      letter-spacing: -0.04em;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card.featured .project-card-visual { min-height: 100%; }
+
+    /* Decorative lines on visual panel */
+    .project-card-visual::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 18px,
+        rgba(245,242,236,0.02) 18px,
+        rgba(245,242,236,0.02) 19px
+      );
+    }
+
+    .project-card-visual .vis-label {
+      position: relative;
+      z-index: 1;
+      font-size: 5rem;
+    }
+
+    .project-body { padding: 2rem; }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .tech-badge {
+      padding: 0.2rem 0.6rem;
+      background: rgba(27,107,107,0.08);
+      color: var(--teal);
+      border-radius: 2px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .project-body h3 {
+      font-family: var(--ff-head);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.02em;
+    }
+
+    .project-body p {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: var(--muted);
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .proj-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--teal);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(27,107,107,0.25);
+      padding-bottom: 1px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .proj-link:hover { color: var(--navy); border-color: var(--navy); }
+
+    .proj-link svg { transition: transform 0.2s var(--ease); }
+    .proj-link:hover svg { transform: translate(2px,-2px); }
+
+    /* ── Contact ─────────────────────────────────────────────── */
+    #contact {
+      background: var(--navy);
+      color: var(--paper);
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    #contact .section-title { color: var(--paper); }
+    #contact .section-label { color: #7dc9c9; }
+    #contact .section-label::before { background: #7dc9c9; }
+    #contact .section-sub { color: rgba(245,242,236,0.6); }
+
+    .contact-items { display: flex; flex-direction: column; gap: 1.2rem; }
+
+    .contact-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.2rem;
+      background: rgba(245,242,236,0.04);
+      border: 1px solid rgba(245,242,236,0.08);
+      border-radius: 4px;
+    }
+
+    .contact-icon {
+      width: 2.2rem;
+      height: 2.2rem;
+      background: rgba(27,107,107,0.25);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #7dc9c9;
+    }
+
+    .contact-detail small {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(245,242,236,0.4);
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    .contact-detail p {
+      font-size: 0.95rem;
+      color: var(--paper);
+      font-weight: 400;
+    }
+
+    .contact-detail a {
+      color: var(--paper);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contact-detail a:hover { color: #7dc9c9; }
+
+    /* ── Footer ──────────────────────────────────────────────── */
+    footer {
+      background: var(--ink);
+      padding: 2rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    footer p {
+      font-size: 0.78rem;
+      color: rgba(245,242,236,0.3);
+    }
+
+    footer a {
+      font-size: 0.78rem;
+      color: rgba(245,242,236,0.3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: #7dc9c9; }
+
+    /* ── Animations ──────────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+    }
+
+    .reveal.visible { opacity: 1; transform: none; }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ── Responsive ──────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      #home { grid-template-columns: 1fr; padding: 7rem 1.5rem 4rem; text-align: center; }
+      #home::after { display: none; }
+      .hero-text p { max-width: 100%; }
+      .hero-actions { justify-content: center; }
+      .hero-chips { justify-content: center; }
+      .hero-visual { order: -1; }
+      .hero-frame { width: min(260px, 70%); }
+      section { padding: 4rem 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
+      .project-card.featured .project-card-visual { min-height: 160px; }
+      .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+
+    @media (max-width: 560px) {
+      .nav-links { display: none; }
+      .about-stats { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="logo">Ace</div>
-            <nav>
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#portfolio">Portfolio</a>
-                <a href="#blog">Blog</a>
-                <a href="#contact">Contact</a>
-            </nav>
-        </header>
 
-        <section class="hero" id="home">
-            <div class="hero-content">
-                <h1>Hi There!<br>I am <span class="accent">Developer</span></h1>
-                <p class="subtitle">I make the complex simple.</p>
-                <a href="#contact" class="cta-button">Contact Me</a>
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <small>Email</small>
-                        <p>kithiamark@gmail.com</p>
-                    </div>
-                    <div class="contact-item">
-                        <small>Phone</small>
-                        <p>+254701550883</p>
-                    </div>
-                    <div class="contact-item">
-                        <small>Location</small>
-                        <p>Laikipia, Kenya</p>
-                    </div>
-                </div>
-            </div>
-            <div class="hero-image">
-                <img src="/IMG-20241129-WA0048 (1).png" alt="Developer portrait">
-            </div>
-        </section>
+  <nav>
+    <div class="nav-logo">MK<span>.</span></div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#portfolio">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-        <section class="about" id="about">
-            <div class="about-content">
-                </div>
-                <div class="about-text">
-                    <h2>Who am I?</h2>
-                    <h3>My name is Mark Kithia i'm a passionate software engineer</h3>
-                    <p class="about">
-                         with hands on training learnimg experience from Moringa school. 
-                        <br>
-                        I'm currently working remotely on my freelance project. I enjoy collaborating with different teams and contributing to their projects.
-                        <br>
-                        I have a strong communication and problem-solving skills. I am always eager to learn and grow as a developer.
-                        <br>
-                        Some of my hobbies include playing basketball, reading, and spending time in nature.
-                        <br>
-                        I am currently seeking opportunities to work remotely and contribute to various open-source projects.
-                    </p>
-                    <p><strong>Name:</strong> Mark Kithia</p>
-                    <p><strong>Age:</strong> 19</p>
-                    <p><strong>From:</strong>Laikipia, Kenya</p>
-                    <p><strong>Email:</strong> kithiamark@gmail.com</p>
-                    <a href="resume.docx" class="cta-button">view Resume</a>
-                </div>
-            </div>
-        </section>
-
-        <section class="services" id="services">
-            <h2>My Services</h2>
-            <div class="services-grid">
-                <div class="service-item">
-                    <div class="service-icon">&#9733;</div>
-                    <h3>Web Development</h3>
-                    <p>With the training i received from Moringa school and my personal progress,<br> I am confident in my skills as a software engineer.</p>
-                </div>
-                <div class="service-item">
-                    <div class="service-icon">&#9733;</div>
-                    <h3>Web App Development</h3>
-                    <p>Through knowledge in different frameworks,I can make a functional web application. </p>
-                </div>
-                <div class="service-item">
-                    <div class="service-icon">&#9733;</div>
-                    <h3>Customer Support</h3>
-                    <p>Through various linked in courses, i am equiped with the mecesary soft skills for customer Support.</p>
-                </div>
-                </div>
-            </div>
-        </section>
+  <section id="home">
+    <div class="hero-text">
+      <div class="hero-eyebrow reveal">Available for remote work</div>
+      <h1 class="reveal reveal-delay-1">Mark<br><em>Kithia.</em></h1>
+      <p class="reveal reveal-delay-2">Full-Stack Software Engineer based in Nairobi, Kenya. I build production-ready web and mobile systems — clean architecture, real users, measurable impact.</p>
+      <div class="hero-actions reveal reveal-delay-3">
+        <a href="#portfolio" class="btn-primary">View My Work</a>
+        <a href="#contact" class="btn-ghost">Get In Touch</a>
+      </div>
+      <div class="hero-chips reveal reveal-delay-4">
+        <span class="chip">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          kithiamark@gmail.com
+        </span>
+        <span class="chip">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+          +254 701 550 883
+        </span>
+        <span class="chip">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Nairobi, Kenya
+        </span>
+      </div>
     </div>
+
+    <div class="hero-visual reveal reveal-delay-2">
+      <div class="hero-frame">
+        <img src="IMG-20241129-WA0048.png" alt="Mark Kithia">
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-label reveal">About me</div>
+    <div class="about-grid">
+      <div>
+        <h2 class="section-title reveal">Building things<br>that work.</h2>
+        <div class="about-body">
+          <p class="reveal reveal-delay-1">
+            I'm a <strong>Full-Stack Software Engineer</strong> with 1+ year of hands-on experience delivering real-world products. Trained at Moringa School in Nairobi and sharpened through building — a multi-repo ELD fleet system, a charity water platform, a kids Bible app, and more.
+          </p>
+          <p class="reveal reveal-delay-2">
+            I work across the full stack: Python APIs, React frontends, Kotlin mobile apps, and PostgreSQL databases. I care about <strong>clean architecture, readable code, and shipping things that actually reach users.</strong>
+          </p>
+          <p class="reveal reveal-delay-3">
+            Outside of code I play basketball, read widely, and spend time in nature — which keeps my thinking fresh and grounded.
+          </p>
+        </div>
+        <div class="about-stats reveal reveal-delay-4">
+          <div class="stat-card">
+            <div class="stat-number">5<span>+</span></div>
+            <div class="stat-label">Projects shipped</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">3<span>+</span></div>
+            <div class="stat-label">Languages</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">1<span>yr</span></div>
+            <div class="stat-label">Experience</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number"><span>∞</span></div>
+            <div class="stat-label">Curiosity</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-2">
+        <div class="skills-block">
+          <div class="skill-category">
+            <div class="skill-cat-label">Languages</div>
+            <div class="skill-tags">
+              <span class="skill-tag">TypeScript</span>
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">JavaScript</span>
+              <span class="skill-tag">Kotlin</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <div class="skill-cat-label">Frontend</div>
+            <div class="skill-tags">
+              <span class="skill-tag">React</span>
+              <span class="skill-tag">Vite</span>
+              <span class="skill-tag">TailwindCSS</span>
+              <span class="skill-tag">HTML5 / CSS3</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <div class="skill-cat-label">Backend</div>
+            <div class="skill-tags">
+              <span class="skill-tag">Flask</span>
+              <span class="skill-tag">FastAPI</span>
+              <span class="skill-tag">REST APIs</span>
+              <span class="skill-tag">JWT Auth</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <div class="skill-cat-label">Database & Tools</div>
+            <div class="skill-tags">
+              <span class="skill-tag">PostgreSQL</span>
+              <span class="skill-tag">SQLAlchemy</span>
+              <span class="skill-tag">Git / GitHub</span>
+              <span class="skill-tag">Agile</span>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:2rem;">
+          <a href="Mark_Kithia_Resume (1)-20260212133633.pdf" class="btn-ghost" style="border-color:rgba(245,242,236,0.3);color:var(--paper);">Download Resume</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Services ───────────────────────────────────────────── -->
+  <section id="services">
+    <div class="section-label reveal">What I offer</div>
+    <h2 class="section-title reveal">Services</h2>
+    <p class="section-sub reveal">End-to-end engineering across web, mobile, and API layers.</p>
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <h3>Full-Stack Web Development</h3>
+        <p>End-to-end web applications with React frontends, Python backends, and PostgreSQL databases. From architecture to deployment.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        </div>
+        <h3>Mobile App Development</h3>
+        <p>Android applications in Kotlin that connect to REST APIs. Built with real-world data sync, auth flows, and clean UI.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-icon-wrap">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+        </div>
+        <h3>API Design & Integration</h3>
+        <p>RESTful APIs with proper validation, structured responses, and third-party integrations — built to be consumed by any client.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Portfolio ──────────────────────────────────────────── -->
+  <section id="portfolio">
+    <div class="section-label reveal">Selected work</div>
+    <h2 class="section-title reveal">Projects</h2>
+    <p class="section-sub reveal">Real applications, real users, real code.</p>
+
+    <div class="projects-grid">
+
+      <!-- ELD System — featured -->
+      <div class="project-card featured reveal">
+        <div class="project-card-visual">
+          <span class="vis-label">🚛</span>
+        </div>
+        <div class="project-body">
+          <div class="project-tech">
+            <span class="tech-badge">Python</span>
+            <span class="tech-badge">React</span>
+            <span class="tech-badge">Kotlin</span>
+            <span class="tech-badge">REST API</span>
+          </div>
+          <h3>ELD Fleet Management System</h3>
+          <p>A three-repo full-stack fleet management platform spanning a Python backend, React web dashboard, and Kotlin Android app. Handles driver HOS compliance, real-time log sync, and multi-client API architecture across separate codebases.</p>
+          <div class="project-links">
+            <a href="https://github.com/Kithiamark/eld-backend2" target="_blank" class="proj-link">
+              Backend
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+            <a href="https://github.com/Kithiamark/eld-frontend" target="_blank" class="proj-link">
+              React Frontend
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+            <a href="https://github.com/Kithiamark/Eld-driver" target="_blank" class="proj-link">
+              Kotlin App
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kids Bible Platform -->
+      <div class="project-card reveal reveal-delay-1">
+        <div class="project-card-visual" style="min-height:180px;">
+          <span class="vis-label">📖</span>
+        </div>
+        <div class="project-body">
+          <div class="project-tech">
+            <span class="tech-badge">Python</span>
+            <span class="tech-badge">React Vite</span>
+            <span class="tech-badge">PostgreSQL</span>
+          </div>
+          <h3>Kids Bible Platform</h3>
+          <p>Interactive Bible learning app for children. Python API serves dynamic content and tracks progress; React Vite frontend delivers a fast, child-friendly experience.</p>
+          <div class="project-links">
+            <a href="https://github.com/Kithiamark/Kids-Bible_platform" target="_blank" class="proj-link">
+              View Repository
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charity Water Platform -->
+      <div class="project-card reveal reveal-delay-2">
+        <div class="project-card-visual" style="min-height:180px;background:#1B3A2D;">
+          <span class="vis-label">💧</span>
+        </div>
+        <div class="project-body">
+          <div class="project-tech">
+            <span class="tech-badge">React</span>
+            <span class="tech-badge">Python</span>
+            <span class="tech-badge">SQL</span>
+            <span class="tech-badge">Email API</span>
+          </div>
+          <h3>Charity Water Donation Platform</h3>
+          <p>Full-stack donation platform helping a water charity reach underserved communities in Kenya. Features donor auth, campaign management, and an automated mailing system.</p>
+          <div class="project-links">
+            <span class="proj-link" style="opacity:0.5;cursor:default;border:none;">Private repo</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Game Store -->
+      <div class="project-card reveal reveal-delay-1">
+        <div class="project-card-visual" style="min-height:180px;background:#1A1A2E;">
+          <span class="vis-label">🎮</span>
+        </div>
+        <div class="project-body">
+          <div class="project-tech">
+            <span class="tech-badge">React</span>
+            <span class="tech-badge">TailwindCSS</span>
+            <span class="tech-badge">Public API</span>
+          </div>
+          <h3>Game Store Web App</h3>
+          <p>Dynamic game discovery platform powered by a public games API. Features real-time data fetching, filtering, search, and a fully responsive component architecture.</p>
+          <div class="project-links">
+            <a href="https://github.com/Kithiamark/GameStore" target="_blank" class="proj-link">
+              View Repository
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Contact ────────────────────────────────────────────── -->
+  <section id="contact">
+    <div class="section-label reveal">Get in touch</div>
+    <div class="contact-layout">
+      <div>
+        <h2 class="section-title reveal">Let's build<br>something.</h2>
+        <p class="section-sub reveal">Open to full-time roles, freelance projects, and remote collaborations. If you have something in mind, I'd like to hear about it.</p>
+        <div class="contact-items">
+          <div class="contact-row reveal reveal-delay-1">
+            <div class="contact-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            </div>
+            <div class="contact-detail">
+              <small>Email</small>
+              <p><a href="mailto:kithiamark@gmail.com">kithiamark@gmail.com</a></p>
+            </div>
+          </div>
+          <div class="contact-row reveal reveal-delay-2">
+            <div class="contact-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+            </div>
+            <div class="contact-detail">
+              <small>Phone</small>
+              <p><a href="tel:+254701550883">+254 701 550 883</a></p>
+            </div>
+          </div>
+          <div class="contact-row reveal reveal-delay-3">
+            <div class="contact-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+            </div>
+            <div class="contact-detail">
+              <small>GitHub</small>
+              <p><a href="https://github.com/Kithiamark" target="_blank">github.com/Kithiamark</a></p>
+            </div>
+          </div>
+          <div class="contact-row reveal reveal-delay-4">
+            <div class="contact-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+            </div>
+            <div class="contact-detail">
+              <small>LinkedIn</small>
+              <p><a href="https://www.linkedin.com/in/mark-kithia-5993b2319/" target="_blank">linkedin.com/in/mark-kithia</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-2" style="display:flex;flex-direction:column;justify-content:center;gap:1.5rem;padding:3rem;background:rgba(245,242,236,0.04);border:1px solid rgba(245,242,236,0.08);border-radius:4px;">
+        <div style="font-family:var(--ff-head);font-size:2rem;font-weight:800;color:var(--paper);letter-spacing:-0.03em;line-height:1.2;">
+          Available for<br>remote work.
+        </div>
+        <p style="font-size:0.88rem;color:rgba(245,242,236,0.55);line-height:1.7;font-weight:300;">
+          Based in Nairobi, Kenya. Comfortable working across time zones with distributed teams. Open to full-time remote roles and contract work.
+        </p>
+        <a href="mailto:kithiamark@gmail.com" class="btn-primary" style="align-self:flex-start;">Send a Message</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ─────────────────────────────────────────────── -->
+  <footer>
+    <p>© 2025 Mark Kithia. All rights reserved.</p>
+    <a href="https://github.com/Kithiamark" target="_blank">github.com/Kithiamark</a>
+  </footer>
+
+  <!-- ── Scroll reveal ──────────────────────────────────────── -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Trigger hero reveals immediately
+    document.querySelectorAll('#home .reveal').forEach(el => {
+      setTimeout(() => el.classList.add('visible'), 100);
+    });
+  </script>
+
 </body>
 </html>
